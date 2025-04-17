@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Устранение неисправностей</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        .content {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+        a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1>Устранение неисправностей</h1>
+        <p>Выберите проблему для начала диагностики:</p>
+        <button class="button" onclick="startDiagnosis('auth')">Пользователь не может авторизоваться</button>
+        <button class="button" onclick="startDiagnosis('notifications')">Уведомления не приходят</button>
+        <button class="button" onclick="startDiagnosis('add_object')">Ошибка при добавлении нового объекта</button>
+        <button class="button" onclick="startDiagnosis('sync')">Данные не синхронизируются</button>
+
+        <div id="diagnosis" style="margin-top: 20px;"></div>
+        <p><a href="index.html">Вернуться на главную страницу</a></p>
+    </div>
+
+    <script>
+        function startDiagnosis(problem) {
+            const diagnosisDiv = document.getElementById('diagnosis');
+            diagnosisDiv.innerHTML = '';
+            showStep(problem, 1);
+        }
+
+        function showStep(problem, step) {
+            const diagnosisDiv = document.getElementById('diagnosis');
+            diagnosisDiv.innerHTML = '';
+
+            if (problem === 'auth') {
+                if (step === 1) {
+                    diagnosisDiv.innerHTML = `
+                        <h3>Диагностика: Пользователь не может авторизоваться</h3>
+                        <p>Есть ли интернет-соединение?</p>
+                        <button class="button" onclick="nextStep('auth', 1, 'yes')">Да</button>
+                        <button class="button" onclick="nextStep('auth', 1, 'no')">Нет</button>
+                    `;
+                } else if (step === 2) {
+                    diagnosisDiv.innerHTML = `
+                        <h3>Диагностика: Пользователь не может авторизоваться</h3>
+                        <p>Правильно ли введены логин и пароль?</p>
+                        <button class="button" onclick="nextStep('auth', 2, 'yes')">Да</button>
+                        <button class="button" onclick="nextStep('auth', 2, 'no')">Нет</button>
+                    `;
+                } else if (step === 3) {
+                    diagnosisDiv.innerHTML = `
+                        <h3>Диагностика: Пользователь не может авторизоваться</h3>
+                        <p>Помог ли перезапуск приложения?</p>
+                        <button class="button" onclick="nextStep('auth', 3, 'yes')">Да</button>
+                        <button class="button" onclick="nextStep('auth', 3, 'no')">Нет</button>
+                    `;
+                } else if (step === 4) {
+                    diagnosisDiv.innerHTML = `
+                        <h3>Диагностика: Пользователь не может авторизоваться</h3>
+                        <p>Обратитесь к администратору для проверки учётной записи.</p>
+                    `;
+                }
+            } else if (problem === 'notifications') {
+                if (step === 1) {
+                    diagnosisDiv.innerHTML = `
+                        <h3>Диагностика: Уведомления не приходят</h3>
+                        <p>Включены ли уведомления в настройках приложения?</p>
+                        <button class="button" onclick="nextStep('notifications', 1, 'yes')">Да</button>
+                        <button class="button" onclick="nextStep('notifications', 1, 'no')">Нет</button>
+                    `;
+                } else if (step === 2) {
+                    diagnosisDiv.innerHTML = `
+                        <h3>Диагностика: Уведомления не приходят</h3>
+                        <p>Есть ли интернет-соединение?</p>
+                        <button class="button" onclick="nextStep('notifications', 2, 'yes')">Да</button>
+                        <button class="button" onclick="nextStep('notifications', 2, 'no')">Нет</button>
+                    `;
+                } else if (step === 3) {
+                    diagnosisDiv.innerHTML = `
+                        <h3>Диагностика: Уведомления не приходят</h3>
+                        <p>Появились ли уведомления после подключения к интернету?</p>
+                        <button class="button" onclick="nextStep('notifications', 3, 'yes')">Да</button>
+                        <button class="button" onclick="nextStep('notifications', 3, 'no')">Нет</button>
+                    `;
+                } else if (step === 4) {
+                    diagnosisDiv.innerHTML = `
+                        <h3>Диагностика: Уведомления не приходят</h3>
+                        <p>Обратитесь к администратору (возможна ошибка сервера).</p>
+                    `;
+                }
+            } else if (problem === 'add_object') {
+                if (step === 1) {
+                    diagnosisDiv.innerHTML = `
+                        <h3>Диагностика: Ошибка при добавлении нового объекта</h3>
+                        <p>Заполнены ли все обязательные поля (адрес, даты)?</p>
+                        <button class="button" onclick="nextStep('add_object', 1, 'yes')">Да</button>
+                        <button class="button" onclick="nextStep('add_object', 1, 'no')">Нет</button>
+                    `;
+                } else if (step === 2) {
+                    diagnosisDiv.innerHTML = `
+                        <h3>Диагностика: Ошибка при добавлении нового объекта</h3>
+                        <p>Есть ли интернет-соединение?</p>
+                        <button class="button" onclick="nextStep('add_object', 2, 'yes')">Да</button>
+                        <button class="button" onclick="nextStep('add_object', 2, 'no')">Нет</button>
+                    `;
+                } else if (step === 3) {
+                    diagnosisDiv.innerHTML = `
+                        <h3>Диагностика: Ошибка при добавлении нового объекта</h3>
+                        <p>Удалось ли добавить объект после подключения к интернету?</p>
+                        <button class="button" onclick="nextStep('add_object', 3, 'yes')">Да</button>
+                        <button class="button" onclick="nextStep('add_object', 3, 'no')">Нет</button>
+                    `;
+                } else if (step === 4) {
+                    diagnosisDiv.innerHTML = `
+                        <h3>Диагностика: Ошибка при добавлении нового объекта</h3>
+                        <p>Помог ли перезапуск приложения?</p>
+                        <button class="button" onclick="nextStep('add_object', 4, 'yes')">Да</button>
+                        <button class="button" onclick="nextStep('add_object', 4, 'no')">Нет</button>
+                    `;
+                } else if (step === 5) {
+                    diagnosisDiv.innerHTML = `
+                        <h3>Диагностика: Ошибка при добавлении нового объекта</h3>
+                        <p>Обратитесь к администратору (возможна ошибка базы данных).</p>
+                    `;
+                }
+            } else if (problem === 'sync') {
+                if (step === 1) {
+                    diagnosisDiv.innerHTML = `
+                        <h3>Диагностика: Данные не синхронизируются</h3>
+                        <p>Подключены ли вы к корпоративной VPN?</p>
+                        <button class="button" onclick="nextStep('sync', 1, 'yes')">Да</button>
+                        <button class="button" onclick="nextStep('sync', 1, 'no')">Нет</button>
+                    `;
+                } else if (step === 2) {
+                    diagnosisDiv.innerHTML = `
+                        <h3>Диагностика: Данные не синхронизируются</h3>
+                        <p>Есть ли интернет-соединение?</p>
+                        <button class="button" onclick="nextStep('sync', 2, 'yes')">Да</button>
+                        <button class="button" onclick="nextStep('sync', 2, 'no')">Нет</button>
+                    `;
+                } else if (step === 3) {
+                    diagnosisDiv.innerHTML = `
+                        <h3>Диагностика: Данные не синхронизируются</h3>
+                        <p>Актуальна ли версия приложения?</p>
+                        <button class="button" onclick="nextStep('sync', 3, 'yes')">Да</button>
+                        <button class="button" onclick="nextStep('sync', 3, 'no')">Нет</button>
+                    `;
+                } else if (step === 4) {
+                    diagnosisDiv.innerHTML = `
+                        <h3>Диагностика: Данные не синхронизируются</h3>
+                        <p>Синхронизируются ли данные после обновления приложения?</p>
+                        <button class="button" onclick="nextStep('sync', 4, 'yes')">Да</button>
+                        <button class="button" onclick="nextStep('sync', 4, 'no')">Нет</button>
+                    `;
+                } else if (step === 5) {
+                    diagnosisDiv.innerHTML = `
+                        <h3>Диагностика: Данные не синхронизируются</h3>
+                        <p>Обратитесь к администратору (ошибка сервера).</p>
+                    `;
+                }
+            }
+        }
+
+        function nextStep(problem, step, answer) {
+            const diagnosisDiv = document.getElementById('diagnosis');
+            diagnosisDiv.innerHTML = '';
+
+            if (problem === 'auth') {
+                if (step === 1 && answer === 'no') {
+                    diagnosisDiv.innerHTML = `
+                        <p>Подключитесь к интернету и попробуйте снова.</p>
+                        <p>Помогло ли это?</p>
+                        <button class="button" onclick="problemResolved()">Да</button>
+                        <button class="button" onclick="showStep('auth', 2)">Нет</button>
+                    `;
+                } else if (step === 1 && answer === 'yes') {
+                    showStep(problem, 2);
+                } else if (step === 2 && answer === 'no') {
+                    diagnosisDiv.innerHTML = `
+                        <p>Введите правильные логин и пароль.</p>
+                        <p>Помогло ли это?</p>
+                        <button class="button" onclick="problemResolved()">Да</button>
+                        <button class="button" onclick="showStep('auth', 3)">Нет</button>
+                    `;
+                } else if (step === 2 && answer === 'yes') {
+                    showStep(problem, 3);
+                } else if (step === 3 && answer === 'no') {
+                    showStep(problem, 4); // Последний шаг, без вопроса
+                } else if (step === 3 && answer === 'yes') {
+                    problemResolved();
+                }
+            } else if (problem === 'notifications') {
+                if (step === 1 && answer === 'no') {
+                    diagnosisDiv.innerHTML = `
+                        <p>Включите уведомления в настройках приложения.</p>
+                        <p>Помогло ли это?</p>
+                        <button class="button" onclick="problemResolved()">Да</button>
+                        <button class="button" onclick="showStep('notifications', 2)">Нет</button>
+                    `;
+                } else if (step === 1 && answer === 'yes') {
+                    showStep(problem, 2);
+                } else if (step === 2 && answer === 'no') {
+                    diagnosisDiv.innerHTML = `
+                        <p>Подключитесь к интернету.</p>
+                        <p>Помогло ли это?</p>
+                        <button class="button" onclick="problemResolved()">Да</button>
+                        <button class="button" onclick="showStep('notifications', 3)">Нет</button>
+                    `;
+                } else if (step === 2 && answer === 'yes') {
+                    showStep(problem, 3);
+                } else if (step === 3 && answer === 'no') {
+                    showStep(problem, 4); // Последний шаг, без вопроса
+                } else if (step === 3 && answer === 'yes') {
+                    problemResolved();
+                }
+            } else if (problem === 'add_object') {
+                if (step === 1 && answer === 'no') {
+                    diagnosisDiv.innerHTML = `
+                        <p>Заполните все обязательные поля и попробуйте снова.</p>
+                        <p>Помогло ли это?</p>
+                        <button class="button" onclick="problemResolved()">Да</button>
+                        <button class="button" onclick="showStep('add_object', 2)">Нет</button>
+                    `;
+                } else if (step === 1 && answer === 'yes') {
+                    showStep(problem, 2);
+                } else if (step === 2 && answer === 'no') {
+                    diagnosisDiv.innerHTML = `
+                        <p>Подключитесь к интернету.</p>
+                        <p>Помогло ли это?</p>
+                        <button class="button" onclick="problemResolved()">Да</button>
+                        <button class="button" onclick="showStep('add_object', 3)">Нет</button>
+                    `;
+                } else if (step === 2 && answer === 'yes') {
+                    showStep(problem, 3);
+                } else if (step === 3 && answer === 'no') {
+                    diagnosisDiv.innerHTML = `
+                        <p>Перезапустите приложение.</p>
+                        <p>Помогло ли это?</p>
+                        <button class="button" onclick="problemResolved()">Да</button>
+                        <button class="button" onclick="showStep('add_object', 4)">Нет</button>
+                    `;
+                } else if (step === 3 && answer === 'yes') {
+                    problemResolved();
+                } else if (step === 4 && answer === 'no') {
+                    showStep(problem, 5); // Последний шаг, без вопроса
+                } else if (step === 4 && answer === 'yes') {
+                    problemResolved();
+                }
+            } else if (problem === 'sync') {
+                if (step === 1 && answer === 'no') {
+                    diagnosisDiv.innerHTML = `
+                        <p>Подключитесь к корпоративной VPN и проверьте снова.</p>
+                        <p>Помогло ли это?</p>
+                        <button class="button" onclick="problemResolved()">Да</button>
+                        <button class="button" onclick="showStep('sync', 2)">Нет</button>
+                    `;
+                } else if (step === 1 && answer === 'yes') {
+                    showStep(problem, 2);
+                } else if (step === 2 && answer === 'no') {
+                    diagnosisDiv.innerHTML = `
+                        <p>Подключитесь к интернету и проверьте снова.</p>
+                        <p>Помогло ли это?</p>
+                        <button class="button" onclick="problemResolved()">Да</button>
+                        <button class="button" onclick="showStep('sync', 3)">Нет</button>
+                    `;
+                } else if (step === 2 && answer === 'yes') {
+                    showStep(problem, 3);
+                } else if (step === 3 && answer === 'no') {
+                    diagnosisDiv.innerHTML = `
+                        <p>Обновите приложение через корпоративный портал.</p>
+                        <p>Помогло ли это?</p>
+                        <button class="button" onclick="problemResolved()">Да</button>
+                        <button class="button" onclick="showStep('sync', 4)">Нет</button>
+                    `;
+                } else if (step === 3 && answer === 'yes') {
+                    showStep(problem, 4);
+                } else if (step === 4 && answer === 'no') {
+                    showStep(problem, 5); // Последний шаг, без вопроса
+                } else if (step === 4 && answer === 'yes') {
+                    problemResolved();
+                }
+            }
+        }
+
+        function problemResolved() {
+            const diagnosisDiv = document.getElementById('diagnosis');
+            diagnosisDiv.innerHTML = `<p>Проблема успешно устранена!</p>`;
+        }
+    </script>
+</body>
+</html>
